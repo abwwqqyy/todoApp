@@ -8,5 +8,7 @@
 <h1><%= "My Todo App" %></h1>
 <br/>
 <a href="hello-servlet">Hello Servlet</a>
+<br/>
+<a href="register">Register</a>
 </body>
 </html>

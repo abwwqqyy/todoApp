@@ -23,7 +23,7 @@
 <body>
   <footer class="footer font-small black">
     <div class="footer-copyright text-center py-3" style="color: white"> 2023 Copyright:
-      <a href="/hello-servlet"><strong> QW </strong></a>
+      <a href="<%= request.getContextPath() %>/hello-servlet"><strong> QW </strong></a>
     </div>
   </footer>
 </body>
