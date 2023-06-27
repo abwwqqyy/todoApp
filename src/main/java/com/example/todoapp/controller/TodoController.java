@@ -30,6 +30,7 @@ public class TodoController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getServletPath();
+        System.out.println(action);
         try {
             switch (action) {
                 case "/new":
@@ -68,9 +69,10 @@ public class TodoController extends HttpServlet {
     }
 
     private void updateTodo(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException {
+        HttpSession session = request.getSession(false); // false will give null
         int id = Integer.parseInt(request.getParameter("id"));
         String title = request.getParameter("title");
-        String username = request.getParameter("username");
+        String username = (String) session.getAttribute("username");
         String description = request.getParameter("description");
         LocalDate targetDate = LocalDate.parse(request.getParameter("targetDate"));
         boolean isDone = Boolean.valueOf(request.getParameter("isDone"));
@@ -96,8 +98,9 @@ public class TodoController extends HttpServlet {
     }
 
     private void insertTodo(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+        HttpSession session = request.getSession(false); // false will give null
         String title = request.getParameter("title");
-        String username = request.getParameter("username");
+        String username = (String) session.getAttribute("username");
         String description = request.getParameter("description");
         boolean isDone = Boolean.valueOf(request.getParameter("isDone"));
         Todo newTodo = new Todo(title, username, description, LocalDate.now(), isDone);

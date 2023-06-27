@@ -39,10 +39,15 @@ public class LoginController extends HttpServlet {
 
         try{
             if(loginDao.validate(login)){
+                //Create a session object
+                HttpSession session = request.getSession();
+                session.setAttribute("username", username);
                 RequestDispatcher dispatcher = request.getRequestDispatcher("todo/todo-list.jsp");
                 dispatcher.forward(request, response);
             } else{
-                HttpSession session = request.getSession();
+                request.setAttribute("NOTIFICATION", "User does not exist or password incorrect, please register.");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("login/login.jsp");
+                dispatcher.forward(request, response);
             }
         } catch (ClassNotFoundException e){
             e.printStackTrace();
