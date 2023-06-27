@@ -42,7 +42,7 @@ public class LoginController extends HttpServlet {
                 //Create a session object
                 HttpSession session = request.getSession();
                 session.setAttribute("username", username);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("todo/todo-list.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("list");
                 dispatcher.forward(request, response);
             } else{
                 request.setAttribute("NOTIFICATION", "User does not exist or password incorrect, please register.");

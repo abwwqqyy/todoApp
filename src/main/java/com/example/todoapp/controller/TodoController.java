@@ -51,9 +51,13 @@ public class TodoController extends HttpServlet {
                 case "/list":
                     listTodo(request, response);
                     break;
+                case "/logout":
+                    logout(request,response);
+                    break;
                 default:
-                    RequestDispatcher dispatcher = request.getRequestDispatcher("login/login.jsp");
-                    dispatcher.forward(request, response);
+//                    RequestDispatcher dispatcher = request.getRequestDispatcher(request.getContextPath());
+//                    dispatcher.forward(request, response);
+                    response.sendRedirect(request.getContextPath() + "/login/login.jsp");
                     break;
             }
         } catch (SQLException e) {
@@ -61,8 +65,18 @@ public class TodoController extends HttpServlet {
         }
     }
 
+    private void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        HttpSession session = request.getSession(false);
+        if(session != null){
+            session.invalidate();
+        }
+        response.sendRedirect(request.getContextPath() + "/login/login.jsp");
+    }
+
     private void listTodo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Todo> listTodo = todoDao.selectAllTodos();
+        HttpSession session = request.getSession(false);
+        String username = (String) session.getAttribute("username");
+        List<Todo> listTodo = todoDao.selectAllTodos(username);
         request.setAttribute("listTodo", listTodo);
         RequestDispatcher dispatcher = request.getRequestDispatcher("todo/todo-list.jsp");
         dispatcher.forward(request, response);

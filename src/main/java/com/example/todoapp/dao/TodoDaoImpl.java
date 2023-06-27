@@ -16,7 +16,7 @@ public class TodoDaoImpl implements TodoDao{
     private static final String INSERT_TODOS_SQL = "INSERT INTO todos " +
             "(title, username, description, target_date, is_done) VALUES " + " (?,?,?,?,?);";
     private static final String SELECT_TODO_BY_ID = "SELECT id,title,username,description,target_date,is_done FROM todos WHERE id = ?";
-    private static final String SELECT_ALL_TODOS = "SELECT * FROM todos";
+    private static final String SELECT_ALL_TODOS_OF_USER = "SELECT * FROM todos WHERE username = ?";
     private static final String DELETE_TODO_BY_ID = "DELETE FROM todos WHERE id = ?;";
     private static final String UPDATE_TODO = "UPDATE todos SET title = ?, username= ?, description =?, target_date =?, is_done = ? WHERE id = ?;";
 
@@ -69,11 +69,12 @@ public class TodoDaoImpl implements TodoDao{
     }
 
     @Override
-    public List<Todo> selectAllTodos() {
+    public List<Todo> selectAllTodos(String user) {
         List<Todo> todos = new ArrayList<>();
         try(Connection connection = JDBCUtils.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_TODOS);
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_TODOS_OF_USER);
         ){
+            preparedStatement.setString(1, user);
             System.out.println(preparedStatement);
             ResultSet rs = preparedStatement.executeQuery();
 
