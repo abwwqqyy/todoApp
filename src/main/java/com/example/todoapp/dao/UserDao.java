@@ -9,8 +9,8 @@ import java.sql.SQLException;
 
 public class UserDao {
     public int registerUser(User user){
-        String INERT_USERS_SQL = "INSERT INTO users" +
-                "(first_name, last_name, username, password) VALUES" +
+        String INERT_USERS_SQL = "INSERT INTO users " +
+                "(first_name, last_name, username, password) VALUES " +
                 "(?,?,?,?);";
         int result = 0;
         try (Connection connection = JDBCUtils.getConnection();
