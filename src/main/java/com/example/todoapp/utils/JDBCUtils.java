@@ -13,10 +13,13 @@ public class JDBCUtils {
         try{
 //            Class.forName("com.mysql.jdbc.driver");
 //            Class.forName("com.mysql.cj.jdbc.driver");
+            DriverManager.registerDriver (new com.mysql.cj.jdbc.Driver()); // need this for tomcat server :(
             connection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
+            System.out.println("Conn: " + connection);
 //        } catch (ClassNotFoundException e) {
 //            e.printStackTrace();
         } catch (SQLException e){
+            System.out.println("Conn failed" );
             e.printStackTrace();
         }
         return connection;
